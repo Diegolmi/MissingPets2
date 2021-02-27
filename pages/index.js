@@ -1,65 +1,48 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import { useEffect, useState, useContext } from "react";
+import Layout from "../components/layout/Layout";
+import { FirebaseContext } from "../firebase";
+import DetallesMascotas from "../components/layout/DetallesMascotas";
+import firebaseConfig from "../firebase/config";
 
-export default function Home() {
+const Home = () => {
+  const [mascotas, setMascotas] = useState([]);
+
+  const { firebase } = useContext(FirebaseContext);
+
+  useEffect(() => {
+    const obtenerMascotas = () => {
+      firebase.db
+        .collection("alertas")
+        .orderBy("creado", "desc")
+        .onSnapshot(manejarSnapShot);
+    };
+    obtenerMascotas();
+  }, []);
+
+  function manejarSnapShot(snapshot) {
+    const mascotas = snapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      };
+    });
+    setMascotas(mascotas);
+  }
+
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+    <div>
+      <Layout>
+        <div className="listado-mascotas">
+          <div className="contenedor">
+            <ul className="bg-white">
+              {mascotas.map((mascota) => (
+                <DetallesMascotas key={mascota.id} mascota={mascota} />
+              ))}
+            </ul>
+          </div>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      </Layout>
     </div>
-  )
-}
+  );
+};
+export default Home;
