@@ -2,6 +2,8 @@ import React, { useState, useContext } from "react";
 import { css } from "@emotion/react";
 import { useRouter } from "next/router";
 import Layout from "../components/layout/Layout";
+import swal from 'sweetalert';
+import DatePicker from "react-datepicker";
 import {
   Formulario,
   Campo,
@@ -17,6 +19,7 @@ import validarAlerta from "../validacion/validarAlerta";
 const STATE_INICIAL = {
   nombre: "",
   raza: "",
+  fecha:"",
   url: "",
   descripcion: "",
 };
@@ -24,6 +27,7 @@ const STATE_INICIAL = {
 const Alerta = () => {
   const [error, guardarError] = useState(false);
   const [image, setImage] = useState(null);
+  //const [startDate, setStartDate] = useState(new Date());
 
   const {
     valores,
@@ -33,7 +37,7 @@ const Alerta = () => {
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarAlerta, crearAlerta);
 
-  const { nombre, raza, url, descripcion } = valores;
+  const { nombre, raza, fecha, url, descripcion } = valores;
 
   // hook de routing para redireccionar
   const router = useRouter();
@@ -41,11 +45,8 @@ const Alerta = () => {
   // context con las operaciones crud de firebase
   const { usuario, firebase } = useContext(FirebaseContext);
 
-  console.log(usuario);
-
   const handleFile = (e) => {
     if (e.target.files[0]) {
-      console.log(e.target.files[0]);
       setImage(e.target.files[0]);
     }
   };
@@ -71,18 +72,21 @@ const Alerta = () => {
       url,
       urlimagen: await handleUpload(),
       descripcion,
-      votos: 0,
+      visitas: 0,
+      fecha,
       comentarios: [],
       creado: Date.now(),
       creador: {
         id: usuario.uid,
         nombre: usuario.displayName,
       },
-      //haVotado: [],
+      
     };
 
     // insertarlo en la bd
-    await firebase.db.collection("alertas").add(alerta);
+    await firebase.db.collection("alertas").add(alerta).then(() => {
+      swal("Buen trabajo!", "Alerta creada con exito!", "success");
+    })
 
     return router.push("/");
   }
@@ -145,6 +149,11 @@ const Alerta = () => {
               </Campo>
 
               {error.raza && <Error>{error.raza}</Error>}
+
+              <Campo>
+                <label htmlFor="fecha"> Fecha</label>
+                <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+              </Campo>
 
               <Campo>
                 <label htmlFor="image">Imagen</label>

@@ -9,6 +9,8 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { Campo, InputSubmit } from "../../components/ui/Formulario";
 import Boton from "../../components/ui/Boton";
+import swal from 'sweetalert';
+
 
 const mascotasPerdidas = () => {
   const [dataMascota, setDataMascota] = useState({});
@@ -61,6 +63,8 @@ const mascotasPerdidas = () => {
     }
   }, [id]);
 
+
+
   if (Object.keys(dataMascota).length === 0 && !error) return "Cargando...";
 
   const {
@@ -73,8 +77,10 @@ const mascotasPerdidas = () => {
     creador,
     raza,
     imagePath,
+    visitas
   } = dataMascota;
 
+ 
   //funcion comentario
 
   const comentarioChange = (e) => {
@@ -120,17 +126,36 @@ const mascotasPerdidas = () => {
   };
 
   const eliminarAlerta = async () => {
-    if (!usuario) {
-      return router.push("/login");
-    }
+    // if (!usuario) {
+    //   return router.push("/login");
+    // }
 
-    if (creador.id === usuario.uid) {
-      return router.push("/");
-    }
+    //  if (creador.id === usuario.uid) {
+    //    return router.push("/");
+    //  }
     try {
-      await firebase.db.collection("alertas").doc(id).delete();
-      await firebase.storage.ref(`alertas/${imagePath}`).delete();
-      router.push("/");
+      
+      await firebase.db.collection("alertas").doc(id).delete().then(() => {
+        
+        swal({
+          title: "Seguro quiere eliminar esta alerta?",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("Alerta eliminada con exito!!", {
+              icon: "success",
+            });
+          } else {
+            swal("Su alerta no fue eliminada");
+          }
+        });
+      })
+      // await firebase.storage.ref(`alertas/${imagePath}`).delete();
+      
+     router.push("/");
     } catch (error) {
       console.log(error);
     }
@@ -152,6 +177,7 @@ const mascotasPerdidas = () => {
             </h1>
             <ContenedorMascota>
               <div>
+                <p>{visitas} personas han visto esta busqueda</p>
                 <p>
                   Publicado hace{" "}
                   {formatDistanceToNow(new Date(creado), { locale: es })}

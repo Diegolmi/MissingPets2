@@ -16,6 +16,7 @@ const Home = () => {
         .orderBy("creado", "desc")
         .onSnapshot(manejarSnapShot);
     };
+
     obtenerMascotas();
   }, []);
 
@@ -28,6 +29,36 @@ const Home = () => {
     });
     setMascotas(mascotas);
   }
+  const {
+    id
+  } = mascotas
+
+  // const agregarVisitas = (e) => {
+    
+  //   //agregar comentario
+  //   const nuevaVisita = [...visitas, visita];
+
+  //   firebase.db.collection("alertas").doc(id).update({
+  //     visitas: nuevaVisita,
+  //   });
+
+  //   setMascotas({
+  //     ...mascotas,
+  //     visitas: nuevaVisita,
+  //   });
+    
+  // };
+  const numeroVisitas = (visita, id) => {
+    if(!id){
+      return false
+    }
+    const totalVisitas = visita + 1;
+
+    firebase.db.collection("alertas").doc(id).update({
+      visitas: totalVisitas,
+    });
+    
+  }
 
   return (
     <div>
@@ -36,7 +67,7 @@ const Home = () => {
           <div className="contenedor">
             <ul className="bg-white">
               {mascotas.map((mascota) => (
-                <DetallesMascotas key={mascota.id} mascota={mascota} />
+                <DetallesMascotas key={mascota.id} mascota={mascota} numeroVisitas={numeroVisitas} />
               ))}
             </ul>
           </div>

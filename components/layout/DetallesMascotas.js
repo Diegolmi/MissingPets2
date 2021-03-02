@@ -3,6 +3,7 @@ import styled from "@emotion/styled";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
 import Link from "next/link";
+import Boton from "../ui/Boton";
 
 const Mascotas = styled.li`
   padding: 4rem;
@@ -55,27 +56,14 @@ const Comentarios = styled.div`
     }
   }
 `;
-// const Votos = styled.div`
-//   flex: 0 0 auto;
-//   text-align: center;
-//   border: 1px solid #e1e1e1;
-//   padding: 1rem 2rem;
 
-//   div {
-//     font-size: 1rem;
-//   }
-//   p {
-//     margin: 0;
-//     font-size: 1rem;
-//     font-weight: 700;
-//   }
-// `;
 
 const Imagen = styled.img`
   width: 200px;
 `;
 
-const DetallesMascotas = ({ mascota }) => {
+
+const DetallesMascotas = ({ mascota, numeroVisitas }) => {
   const {
     id,
     comentarios,
@@ -84,8 +72,11 @@ const DetallesMascotas = ({ mascota }) => {
     nombre,
     urlimagen,
     raza,
-    votos,
+    fecha,
+    visitas
   } = mascota;
+
+  
   return (
     <Mascotas>
       <DescripcionMascotas>
@@ -94,9 +85,10 @@ const DetallesMascotas = ({ mascota }) => {
         </div>
         <div>
           <Link href="/mascotasPerdidas/[id]" as={`/mascotasPerdidas/${id}`}>
-            <Titulo>{nombre}</Titulo>
+            <Titulo onClick={() => numeroVisitas(visitas, id)}>{nombre}</Titulo>
           </Link>
           <TituloMascota>{descripcion}</TituloMascota>
+          <p>Se perdio el {fecha} en la zona de Palermo.</p>
           <Comentarios>
             <div>
               <img src="/static/img/comentario.png" alt="" />
@@ -109,10 +101,7 @@ const DetallesMascotas = ({ mascota }) => {
           </p>
         </div>
       </DescripcionMascotas>
-      {/* <Votos>
-        <div>&#9650;</div>
-        <p>{votos}</p>
-      </Votos> */}
+   
     </Mascotas>
   );
 };
