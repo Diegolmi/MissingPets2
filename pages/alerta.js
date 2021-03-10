@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React, { useState, useContext } from "react";
 import { css } from "@emotion/react";
 import { useRouter } from "next/router";
@@ -152,7 +153,7 @@ const Alerta = () => {
 
               <Campo>
                 <label htmlFor="fecha"> Fecha</label>
-                <DatePicker selected={startDate} onChange={date => setStartDate(date)} />
+                {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} /> */}
               </Campo>
 
               <Campo>
