@@ -12,6 +12,24 @@ import { Campo, InputSubmit } from "../../components/ui/Formulario";
 import Boton from "../../components/ui/Boton";
 import swal from 'sweetalert';
 
+const ContenedorMascota = styled.div`
+@media (min-width: 768px) {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  column-gap: 2rem;
+}
+`;
+const EsCreador = styled.p`
+padding: 0.5rem 2rem;
+background-color: #da552f;
+color: #ffff;
+text-transform: uppercase;
+font-weight: bold;
+display: inline-block;
+text-align: center;
+`;
+
+
 
 const mascotasPerdidas = () => {
   const [dataMascota, setDataMascota] = useState({});
@@ -19,23 +37,7 @@ const mascotasPerdidas = () => {
   const [comentario, setComentario] = useState({});
   const [consultarDB, setConsultarDB] = useState(true);
 
-  const ContenedorMascota = styled.div`
-    @media (min-width: 768px) {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      column-gap: 2rem;
-    }
-  `;
-  const EsCreador = styled.p`
-    padding: 0.5rem 2rem;
-    background-color: #da552f;
-    color: #ffff;
-    text-transform: uppercase;
-    font-weight: bold;
-    display: inline-block;
-    text-align: center;
-  `;
-
+ 
   //routing id
 
   const router = useRouter();
@@ -84,19 +86,21 @@ const mascotasPerdidas = () => {
  
   //funcion comentario
 
-  const comentarioChange = (e) => {
-    setComentario({
-      ...comentario,
-      [e.target.name]: e.target.value,
-    });
+  const comentarioChange = e => {
+    
+     setComentario({
+       ...comentario,
+       [e.target.name] : e.target.value
+
+     })
   };
 
-  const creadorComentario = (id) => {
+  const creadorComentario = id => {
     if (creador.id === id) {
       return true;
     }
   };
-  const agregarComentario = (e) => {
+  const agregarComentario = e => {
     e.preventDefault();
     if (!usuario) {
       return router.push("/login");
@@ -182,7 +186,7 @@ const mascotasPerdidas = () => {
                 <p>
                   Publicado hace{" "}
                   {formatDistanceToNow(new Date(creado), { locale: es })}
-                  <p>Por: {creador.nombre}</p>
+                  <span>Por: {creador.nombre}</span>
                 </p>
                 <img
                   src={urlimagen}
@@ -201,7 +205,9 @@ const mascotasPerdidas = () => {
                           type="text"
                           name="mensaje"
                           onChange={comentarioChange}
-                        />
+                         
+                          
+                         />
                       </Campo>
                       <InputSubmit type="submit" value="Agregar comentario" />
                     </form>
