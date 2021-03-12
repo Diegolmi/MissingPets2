@@ -3,11 +3,16 @@ import Layout from "../components/layout/Layout";
 import { FirebaseContext } from "../firebase";
 import DetallesMascotas from "../components/layout/DetallesMascotas";
 import firebaseConfig from "../firebase/config";
+import dynamic from "next/dynamic";
+
 
 const Home = () => {
   const [mascotas, setMascotas] = useState([]);
 
   const { firebase } = useContext(FirebaseContext);
+  const MapWithNoSSR = dynamic(() => import('../components/Map'), {
+    ssr: false
+  });
 
   useEffect(() => {
     const obtenerMascotas = () => {
@@ -72,6 +77,9 @@ const Home = () => {
             </ul>
           </div>
         </div>
+        <div id="map">
+         <MapWithNoSSR />
+      </div>
       </Layout>
     </div>
   );

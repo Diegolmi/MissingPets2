@@ -37,6 +37,8 @@ const mascotasPerdidas = () => {
   const [comentario, setComentario] = useState({});
   const [consultarDB, setConsultarDB] = useState(true);
 
+  
+
  
   //routing id
 
