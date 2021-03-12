@@ -22,7 +22,7 @@ import validarAlerta from '../validacion/validarAlerta';
 const STATE_INICIAL = {
   nombre: '',
   raza: '',
-  fecha: '',
+  date: '',
   url: '',
   descripcion: '',
 };
@@ -40,7 +40,7 @@ const Alerta = () => {
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarAlerta, crearAlerta);
 
-  const { nombre, raza, fecha, url, descripcion } = valores;
+  const { nombre, raza, date, url, descripcion } = valores;
 
   // hook de routing para redireccionar
   const router = useRouter();
@@ -76,7 +76,7 @@ const Alerta = () => {
       urlimagen: await handleUpload(),
       descripcion,
       visitas: 0,
-      fecha,
+      date,
       comentarios: [],
       creado: Date.now(),
       creador: {
@@ -164,8 +164,13 @@ const Alerta = () => {
               {error.raza && <Error>{error.raza}</Error>}
 
               <Campo>
-                <label htmlFor='fecha'> Fecha</label>
-                 <DatePicker selected={startDate} onChange={date => setStartDate(date)} /> 
+                <label htmlFor='date'> Fecha</label>
+                 {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} />  */}
+                 <input type='date'
+                 name="date"
+                 value={date}
+                  onChange={handleChange}
+                  onBlur={handleBlur}></input>
               </Campo>
 
               <Campo>

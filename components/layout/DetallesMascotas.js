@@ -72,7 +72,7 @@ const DetallesMascotas = ({ mascota, numeroVisitas }) => {
     nombre,
     urlimagen,
     raza,
-    fecha,
+    date,
     visitas
   } = mascota;
 
@@ -88,7 +88,7 @@ const DetallesMascotas = ({ mascota, numeroVisitas }) => {
             <Titulo onClick={() => numeroVisitas(visitas, id)}>{nombre}</Titulo>
           </Link>
           <TituloMascota>{descripcion}</TituloMascota>
-          <p>Se perdio el {fecha} en la zona de Palermo.</p>
+          <p>Se perdio el {date} en la zona de Palermo.</p>
           <Comentarios>
             <div>
               <img src="/static/img/comentario.png" alt="" />
