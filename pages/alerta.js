@@ -4,7 +4,7 @@ import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
 import swal from 'sweetalert';
-import DatePicker from 'react-datepicker';
+import moment from 'moment';
 import {
   Formulario,
   Campo,
@@ -18,6 +18,7 @@ import { FirebaseContext } from '../firebase';
 // validaciones
 import useValidacion from '../hooks/useValidacion';
 import validarAlerta from '../validacion/validarAlerta';
+moment.locale('es')
 
 const STATE_INICIAL = {
   nombre: '',
@@ -95,6 +96,8 @@ const Alerta = () => {
 
     return router.push('/');
   }
+  const hoy = moment();
+  console.log(hoy.format('dddd Do MMMM YYYY'))
 
   return (
     <div>
