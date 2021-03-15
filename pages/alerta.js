@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
 import swal from 'sweetalert';
 import DatePicker from 'react-datepicker';
+//import MapView from '../components/MapView'
 import {
   Formulario,
   Campo,
@@ -14,6 +15,8 @@ import {
 import Link from 'next/link';
 import Boton from '../components/ui/Boton';
 import { FirebaseContext } from '../firebase';
+import dynamic from 'next/dynamic'
+
 
 // validaciones
 import useValidacion from '../hooks/useValidacion';
@@ -31,7 +34,6 @@ const Alerta = () => {
   const [error, guardarError] = useState(false);
   const [image, setImage] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
-
   const {
     valores,
     errores,
@@ -197,6 +199,9 @@ const Alerta = () => {
               </Campo> */}
 
               {/* {error.url && <Error>{error.url}</Error>} */}
+              <Campo>
+                {/* <MapView /> */}
+              </Campo>
               <Campo>
                 <label htmlFor='descripcion'>Descripcion</label>
                 <textarea
