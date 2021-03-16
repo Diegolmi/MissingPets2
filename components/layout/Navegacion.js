@@ -25,7 +25,7 @@ const Navegacion = () => {
     <Nav>
       <Link href="/">Inicio</Link>
       <Link href="/albergues">Albergues</Link>
-      {usuario && <Link href="/alerta">Alerta</Link>}
+      <Link href="/alerta">Alerta</Link>
     </Nav>
   );
 };
