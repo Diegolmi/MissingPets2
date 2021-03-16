@@ -4,8 +4,8 @@ import { css } from '@emotion/react';
 import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
 import swal from 'sweetalert';
-import DatePicker from 'react-datepicker';
-//import MapView from '../components/MapView'
+import moment from 'moment';
+
 import {
   Formulario,
   Campo,
@@ -21,11 +21,12 @@ import dynamic from 'next/dynamic'
 // validaciones
 import useValidacion from '../hooks/useValidacion';
 import validarAlerta from '../validacion/validarAlerta';
+moment.locale('es')
 
 const STATE_INICIAL = {
   nombre: '',
   raza: '',
-  fecha: '',
+  date: '',
   url: '',
   descripcion: '',
 };
@@ -42,7 +43,7 @@ const Alerta = () => {
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarAlerta, crearAlerta);
 
-  const { nombre, raza, fecha, url, descripcion } = valores;
+  const { nombre, raza, date, url, descripcion } = valores;
 
   // hook de routing para redireccionar
   const router = useRouter();
@@ -78,7 +79,7 @@ const Alerta = () => {
       urlimagen: await handleUpload(),
       descripcion,
       visitas: 0,
-      fecha,
+      date,
       comentarios: [],
       creado: Date.now(),
       creador: {
@@ -97,6 +98,8 @@ const Alerta = () => {
 
     return router.push('/');
   }
+  const hoy = moment();
+  console.log(hoy.format('dddd Do MMMM YYYY'))
 
   return (
     <div>
@@ -166,8 +169,13 @@ const Alerta = () => {
               {error.raza && <Error>{error.raza}</Error>}
 
               <Campo>
-                <label htmlFor='fecha'> Fecha</label>
-                 <DatePicker selected={startDate} onChange={date => setStartDate(date)} /> 
+                <label htmlFor='date'> Fecha</label>
+                 {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} />  */}
+                 <input type='date'
+                 name="date"
+                 value={date}
+                  onChange={handleChange}
+                  onBlur={handleBlur}></input>
               </Campo>
 
               <Campo>

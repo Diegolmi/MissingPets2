@@ -78,6 +78,7 @@ const mascotasPerdidas = () => {
     descripcion,
     nombre,
     url,
+    date,
     urlimagen,
     creador,
     raza,
