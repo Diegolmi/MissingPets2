@@ -5,7 +5,8 @@ import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
 import swal from 'sweetalert';
 import moment from 'moment';
-
+import { Button } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
 import {
   Formulario,
   Campo,
@@ -15,13 +16,14 @@ import {
 import Link from 'next/link';
 import Boton from '../components/ui/Boton';
 import { FirebaseContext } from '../firebase';
-import dynamic from 'next/dynamic'
-
+import dynamic from 'next/dynamic';
 
 // validaciones
 import useValidacion from '../hooks/useValidacion';
 import validarAlerta from '../validacion/validarAlerta';
-moment.locale('es')
+import CrearCuenta from './crear-cuenta';
+import CrearCuentaAlerta from './crear-cuenta-alerta';
+moment.locale('es');
 
 const STATE_INICIAL = {
   nombre: '',
@@ -99,7 +101,11 @@ const Alerta = () => {
     return router.push('/');
   }
   const hoy = moment();
-  console.log(hoy.format('dddd Do MMMM YYYY'))
+  console.log(hoy.format('dddd Do MMMM YYYY'));
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <div>
@@ -141,8 +147,8 @@ const Alerta = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   css={css`
-                  font-size:15px;
-                  box-shadow: 10px 10px 4px -8px rgba(0,0,0,0.75);
+                    font-size: 15px;
+                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
                   `}
                 />
               </Campo>
@@ -160,8 +166,8 @@ const Alerta = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   css={css`
-                  font-size:15px;
-                  box-shadow: 10px 10px 4px -8px rgba(0,0,0,0.75);
+                    font-size: 15px;
+                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
                   `}
                 />
               </Campo>
@@ -170,12 +176,14 @@ const Alerta = () => {
 
               <Campo>
                 <label htmlFor='date'> Fecha</label>
-                 {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} />  */}
-                 <input type='date'
-                 name="date"
-                 value={date}
+                {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} />  */}
+                <input
+                  type='date'
+                  name='date'
+                  value={date}
                   onChange={handleChange}
-                  onBlur={handleBlur}></input>
+                  onBlur={handleBlur}
+                ></input>
               </Campo>
 
               <Campo>
@@ -187,8 +195,8 @@ const Alerta = () => {
                   name='image'
                   onInput={(e) => handleFile(e)}
                   css={css`
-                  font-size:15px;
-                  box-shadow: 10px 10px 4px -8px rgba(0,0,0,0.75);
+                    font-size: 15px;
+                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
                   `}
                 />
               </Campo>
@@ -207,9 +215,7 @@ const Alerta = () => {
               </Campo> */}
 
               {/* {error.url && <Error>{error.url}</Error>} */}
-              <Campo>
-                {/* <MapView /> */}
-              </Campo>
+              <Campo>{/* <MapView /> */}</Campo>
               <Campo>
                 <label htmlFor='descripcion'>Descripcion</label>
                 <textarea
@@ -219,8 +225,8 @@ const Alerta = () => {
                   onChange={handleChange}
                   onBlur={handleBlur}
                   css={css`
-                  font-size:15px;
-                  box-shadow: 10px 10px 4px -8px rgba(0,0,0,0.75);
+                    font-size: 15px;
+                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
                   `}
                 />
               </Campo>
@@ -233,26 +239,30 @@ const Alerta = () => {
               <InputSubmit type='submit' value='Crear alerta' />
             ) : (
               !usuario && (
-                <Link href='/crear-cuenta'>
-                  <Boton
-                    bgColor='true'
-                    css={css`
-                      margin-left: 200px;
-                      text-align: center;
-                      font-weight: 700;
-                      text-transform: uppercase;
-                      padding: 0.8rem 2rem;
-                      width: 300px;
-                    `}
-                  >
-                    Crear Cuenta
-                  </Boton>
-                </Link>
+                <Boton variant='primary'  css={css`
+                margin-top: 5rem;
+                text-align: center;
+                background-color: red;
+                color: white;
+                margin-left: 250px;
+                
+              `}  onClick={handleShow}>
+                  Registrate
+                </Boton>
               )
             )}
           </Formulario>
         </>
       </Layout>
+      <Modal show={show} onHide={handleClose} animation={false}>
+        <Modal.Header closeButton>
+          <Modal.Title>Registrate</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <CrearCuentaAlerta />
+       
+       </Modal.Body>
+      </Modal>
     </div>
   );
 };
