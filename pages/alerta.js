@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
 import swal from 'sweetalert';
 import moment from 'moment';
-import { Button } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import {
   Formulario,
@@ -37,6 +37,8 @@ const Alerta = () => {
   const [error, guardarError] = useState(false);
   const [image, setImage] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
+  const [fileUrl, setFileUrl] = useState("https://picsum.photos/700/400?random");
+
   const {
     valores,
     errores,
@@ -100,108 +102,130 @@ const Alerta = () => {
 
     return router.push('/');
   }
+  function processImage(event){
+    const imageFile = event.target.files[0];
+   const imageUrl = URL.createObjectURL(imageFile);
+   setFileUrl(imageUrl)
+ }
+
   const hoy = moment();
   console.log(hoy.format('dddd Do MMMM YYYY'));
   const [show, setShow] = useState(false);
 
+  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
-    <div>
+    <>
       <Layout>
-        <>
-          <h1
-            css={css`
-              margin-left: 450px;
-              text-align: center;
-              margin-top: 5rem;
-              font-weight: 700;
-              text-transform: uppercase;
-              padding: 0.8rem 2rem;
-              width: 300px;
-              background-color: #00bfbf;
-              color: white;
-            `}
-          >
-            Nueva Alerta
-          </h1>
-          <Formulario onSubmit={handleSubmit} noValidate>
-            <fieldset>
-              <legend
+        <Container>
+        <h1
                 css={css`
-                  font-size: 25px;
+                  margin-left: 450px;
+                  text-align: center;
+                  margin-top: 5rem;
+                  font-weight: 700;
+                  text-transform: uppercase;
+                  padding: 0.8rem 2rem;
+                  width: 400px;
+                  background-color: #00bfbf;
+                  color: white;
                 `}
               >
-                Información General{' '}
-              </legend>
-
+                Nueva Alerta
+              </h1>
+          <Row>
+            <Col>
+              <img  css={css`
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                        margin-top: 100px;
+                        width: 500px;
+                      `} src={fileUrl} alt='' />
               <Campo>
-                <label htmlFor='nombre'>Nombre</label>
-                <input
-                  type='text'
-                  id='nombre'
-                  placeholder='Nombre de la mascota'
-                  name='nombre'
-                  value={nombre}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  css={css`
-                    font-size: 15px;
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                  `}
-                />
-              </Campo>
+                    <label htmlFor='image'>Imagen</label>
+                    <input
+                      type='file'
+                      accept='image/*'
+                      id='image'
+                      name='image'
+                      onInput={(e) => handleFile(e)}
+                      onChange={processImage}
+                      
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                        margin-top: 20px;
+                        
+                      `}
+                    />
+                  </Campo>
+            </Col>
+            <Col>
+             
+              <Formulario onSubmit={handleSubmit} noValidate>
+                <fieldset>
+                  <legend
+                    css={css`
+                      font-size: 25px;
+                    `}
+                  >
+                    Información General{' '}
+                  </legend>
 
-              {error.nombre && <Error>{error.nombre}</Error>}
+                  <Campo>
+                    <label htmlFor='nombre'>Nombre</label>
+                    <input
+                      type='text'
+                      id='nombre'
+                      placeholder='Nombre de la mascota'
+                      name='nombre'
+                      value={nombre}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                      `}
+                    />
+                  </Campo>
 
-              <Campo>
-                <label htmlFor='raza'>Raza</label>
-                <input
-                  type='text'
-                  id='raza'
-                  placeholder='Raza'
-                  name='raza'
-                  value={raza}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  css={css`
-                    font-size: 15px;
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                  `}
-                />
-              </Campo>
+                  {error.nombre && <Error>{error.nombre}</Error>}
 
-              {error.raza && <Error>{error.raza}</Error>}
+                  <Campo>
+                    <label htmlFor='raza'>Raza</label>
+                    <input
+                      type='text'
+                      id='raza'
+                      placeholder='Raza'
+                      name='raza'
+                      value={raza}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                      `}
+                    />
+                  </Campo>
 
-              <Campo>
-                <label htmlFor='date'> Fecha</label>
-                {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} />  */}
-                <input
-                  type='date'
-                  name='date'
-                  value={date}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></input>
-              </Campo>
+                  {error.raza && <Error>{error.raza}</Error>}
 
-              <Campo>
-                <label htmlFor='image'>Imagen</label>
-                <input
-                  type='file'
-                  accept='image/*'
-                  id='image'
-                  name='image'
-                  onInput={(e) => handleFile(e)}
-                  css={css`
-                    font-size: 15px;
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                  `}
-                />
-              </Campo>
+                  <Campo>
+                    <label htmlFor='date'> Fecha</label>
+                    {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} />  */}
+                    <input
+                      type='date'
+                      name='date'
+                      value={date}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    ></input>
+                  </Campo>
 
-              {/* <Campo>
+                 
+
+                  {/* <Campo>
                 <label htmlFor="url">URL</label>
                 <input
                   type="url"
@@ -214,56 +238,62 @@ const Alerta = () => {
                 />
               </Campo> */}
 
-              {/* {error.url && <Error>{error.url}</Error>} */}
-              <Campo>{/* <MapView /> */}</Campo>
-              <Campo>
-                <label htmlFor='descripcion'>Descripcion</label>
-                <textarea
-                  id='descripcion'
-                  name='descripcion'
-                  value={descripcion}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  css={css`
-                    font-size: 15px;
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                  `}
-                />
-              </Campo>
-              {error.descripcion && <Error>{error.descripcion}</Error>}
-            </fieldset>
+                  {/* {error.url && <Error>{error.url}</Error>} */}
+                  <Campo>{/* <MapView /> */}</Campo>
+                  <Campo>
+                    <label htmlFor='descripcion'>Descripcion</label>
+                    <textarea
+                      id='descripcion'
+                      name='descripcion'
+                      value={descripcion}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                         
+                      `}
+                    />
+                  </Campo>
+                  {error.descripcion && <Error>{error.descripcion}</Error>}
+                </fieldset>
 
-            {error && <Error>{error} </Error>}
+                {error && <Error>{error} </Error>}
 
-            {usuario ? (
-              <InputSubmit type='submit' value='Crear alerta' />
-            ) : (
-              !usuario && (
-                <Boton variant='primary'  css={css`
-                margin-top: 5rem;
-                text-align: center;
-                background-color: red;
-                color: white;
-                margin-left: 250px;
-                
-              `}  onClick={handleShow}>
-                  Registrate
-                </Boton>
-              )
-            )}
-          </Formulario>
-        </>
+                {usuario ? (
+                  <InputSubmit type='submit' value='Crear alerta' />
+                ) : (
+                  !usuario && (
+                    <Boton
+                      variant='primary'
+                      css={css`
+                        margin-top: 5rem;
+                        text-align: center;
+                        background-color: red;
+                        color: white;
+                        margin-left: 250px;
+                      `}
+                      onClick={handleShow}
+                    >
+                      Registrate
+                    </Boton>
+                  )
+                )}
+              </Formulario>
+            </Col>
+          </Row>
+        </Container>
       </Layout>
+
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Registrate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CrearCuentaAlerta />
-       
-       </Modal.Body>
+        </Modal.Body>
       </Modal>
-    </div>
+    </>
   );
 };
 
