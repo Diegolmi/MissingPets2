@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
 import swal from 'sweetalert';
 import moment from 'moment';
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col, Card } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import {
   Formulario,
@@ -37,7 +37,9 @@ const Alerta = () => {
   const [error, guardarError] = useState(false);
   const [image, setImage] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
-  const [fileUrl, setFileUrl] = useState("https://picsum.photos/700/400?random");
+  const [fileUrl, setFileUrl] = useState(
+    'https://picsum.photos/150/150?random'
+  );
 
   const {
     valores,
@@ -102,67 +104,99 @@ const Alerta = () => {
 
     return router.push('/');
   }
-  function processImage(event){
+  function processImage(event) {
     const imageFile = event.target.files[0];
-   const imageUrl = URL.createObjectURL(imageFile);
-   setFileUrl(imageUrl)
- }
+    const imageUrl = URL.createObjectURL(imageFile);
+    setFileUrl(imageUrl);
+  }
 
   const hoy = moment();
   console.log(hoy.format('dddd Do MMMM YYYY'));
   const [show, setShow] = useState(false);
 
-  
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   return (
     <>
       <Layout>
-        <Container>
-        <h1
-                css={css`
-                  margin-left: 450px;
-                  text-align: center;
-                  margin-top: 5rem;
-                  font-weight: 700;
-                  text-transform: uppercase;
-                  padding: 0.8rem 2rem;
-                  width: 400px;
-                  background-color: #00bfbf;
-                  color: white;
-                `}
-              >
-                Nueva Alerta
-              </h1>
+        <Container
+          css={css`
+            padding: 20px;
+          `}
+          fluid
+        >
+          <h1
+            css={css`
+              margin-left: 450px;
+              text-align: center;
+              margin-top: 5rem;
+              font-weight: 700;
+              text-transform: uppercase;
+              padding: 0.8rem 2rem;
+              width: 400px;
+              background-color: #00bfbf;
+              color: white;
+            `}
+          >
+            Nueva Alerta
+          </h1>
           <Row>
             <Col>
-              <img  css={css`
-                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                        margin-top: 100px;
-                        width: 500px;
-                      `} src={fileUrl} alt='' />
-              <Campo>
-                    <label htmlFor='image'>Imagen</label>
-                    <input
-                      type='file'
-                      accept='image/*'
-                      id='image'
-                      name='image'
-                      onInput={(e) => handleFile(e)}
-                      onChange={processImage}
-                      
-                      css={css`
-                        font-size: 15px;
-                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                        margin-top: 20px;
-                        
-                      `}
-                    />
-                  </Campo>
+              <Card
+                css={css`
+                  background-color: whitesmoke;
+                  margin-top: 100px;
+                  margin-left: 50px;
+                `}
+              >
+                <img
+                  css={css`
+                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                    margin-top: 100px;
+                    width: 500px;
+                    margin-left: 40px;
+                  `}
+                  src={fileUrl}
+                  alt=''
+                />
+                <Campo>
+                  <div
+                    css={css`
+                      margin-top: -400px;
+                      margin-left: 600px;
+                      color: black;
+                    `}
+                  >
+                    <h2> {nombre}</h2>
+                  </div>
+                </Campo>
+                <div
+                  css={css`
+                    margin-left: 50px;
+                    color: black;
+                  `}
+                >
+                  <h4 htmlFor=''>Descripcion:</h4>
+                  <span>{descripcion}</span>
+                </div>
+                <div
+                  css={css`
+                    margin-top: 100px;
+                  `}
+                >
+                  <hr />
+                  <span
+                    css={css`
+                      margin-left: 50px;
+                    `}
+                  >
+                    Missing.Pets Lo viste? Contactate a hola@missing.pets
+                  </span>
+                </div>
+              </Card>
             </Col>
             <Col>
-             
               <Formulario onSubmit={handleSubmit} noValidate>
                 <fieldset>
                   <legend
@@ -222,8 +256,24 @@ const Alerta = () => {
                       onBlur={handleBlur}
                     ></input>
                   </Campo>
-
-                 
+                  <Campo>
+                    <label htmlFor='image'>Imagen</label>
+                    <input
+                      type='file'
+                      accept='image/*'
+                      id='image'
+                      name='image'
+                      onInput={(e) => handleFile(e)}
+                      onChange={processImage}
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                        margin-top: 20px;
+                        width: 100px;
+                        margin-left: 20px;
+                      `}
+                    />
+                  </Campo>
 
                   {/* <Campo>
                 <label htmlFor="url">URL</label>
@@ -251,7 +301,6 @@ const Alerta = () => {
                       css={css`
                         font-size: 15px;
                         box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                         
                       `}
                     />
                   </Campo>
