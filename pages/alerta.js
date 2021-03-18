@@ -154,8 +154,10 @@ const Alerta = () => {
                   css={css`
                     box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
                     margin-top: 100px;
-                    width: 500px;
+                    width: 300px;
                     margin-left: 40px;
+                    display: flex;
+                    justify-content: space-around
                   `}
                   src={fileUrl}
                   alt=''
@@ -188,7 +190,10 @@ const Alerta = () => {
                   <hr />
                   <span
                     css={css`
-                      margin-left: 50px;
+                      display: flex;
+                      text-align: center;
+                      justify-content: center;
+                      padding: 15px;
                     `}
                   >
                     Missing.Pets Lo viste? Contactate a hola@missing.pets
