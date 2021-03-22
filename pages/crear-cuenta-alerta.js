@@ -54,7 +54,7 @@ const CrearCuentaAlerta = () => {
           text-align: center;
         `}
       >
-        Crear Cuenta Alerta
+        Crear Cuenta
       </h1>
       <Formulario onSubmit={handleSubmit} noValidate>
         <Campo>
@@ -101,6 +101,7 @@ const CrearCuentaAlerta = () => {
 
         <InputSubmit type='submit' value='Crear Cuenta' />
       </Formulario>
+      ya tenes una cuenta? <a>ingresa aqui</a>
     </>
   );
 };

@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
 import swal from 'sweetalert';
 import moment from 'moment';
-import { Container, Row, Col, Card } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import {
   Formulario,
@@ -142,65 +142,68 @@ const Alerta = () => {
             Nueva Alerta
           </h1>
           <Row>
-            <Col>
-              <Card
-                css={css`
-                  background-color: whitesmoke;
-                  margin-top: 100px;
-                  margin-left: 50px;
-                `}
-              >
-                <img
+            <Row>
+              <Col>
+                <Card
                   css={css`
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                    background-color: whitesmoke;
                     margin-top: 100px;
-                    width: 300px;
-                    margin-left: 40px;
-                    display: flex;
-                    justify-content: space-around
+                    margin-left: 50px;
                   `}
-                  src={fileUrl}
-                  alt=''
-                />
-                <Campo>
+                >
+                  <img
+                    css={css`
+                      box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                      margin-top: 100px;
+                      width: 300px;
+                      margin-left: 40px;
+                      display: flex;
+                      justify-content: space-around;
+                    `}
+                    src={fileUrl}
+                    alt=''
+                  />
+                  <Campo>
+                    <div
+                      css={css`
+                        margin-top: -400px;
+                        margin-left: 400px;
+                        color: black;
+                      `}
+                    >
+                      <h2>{nombre}</h2>
+                      <span>Se perdio el dia {date} en la zona de ....</span>
+                    </div>
+                  </Campo>
                   <div
                     css={css`
-                      margin-top: -400px;
-                      margin-left: 600px;
+                      margin-left: 50px;
                       color: black;
                     `}
                   >
-                    <h2> {nombre}</h2>
+                    <h4 htmlFor=''>Descripcion:</h4>
+                    <span>{descripcion}</span>
                   </div>
-                </Campo>
-                <div
-                  css={css`
-                    margin-left: 50px;
-                    color: black;
-                  `}
-                >
-                  <h4 htmlFor=''>Descripcion:</h4>
-                  <span>{descripcion}</span>
-                </div>
-                <div
-                  css={css`
-                    margin-top: 100px;
-                  `}
-                >
-                  <hr />
-                  <span
+                  <div
                     css={css`
-                      display: flex;
-                      text-align: center;
-                      justify-content: center;
-                      padding: 15px;
+                      margin-top: 100px;
                     `}
                   >
-                    Missing.Pets Lo viste? Contactate a hola@missing.pets
-                  </span>
-                </div>
-              </Card>
-            </Col>
+                    <hr />
+                    <span
+                      css={css`
+                        display: flex;
+                        text-align: center;
+                        justify-content: center;
+                        padding: 15px;
+                      `}
+                    >
+                      Missing.Pets Lo viste? Contactate a hola@missing.pets
+                    </span>
+                  </div>
+                </Card>
+              </Col>
+            </Row>
             <Col>
               <Formulario onSubmit={handleSubmit} noValidate>
                 <fieldset>
@@ -260,6 +263,11 @@ const Alerta = () => {
                       onChange={handleChange}
                       onBlur={handleBlur}
                     ></input>
+                  </Campo>
+                  <Campo>
+                    <Form.Control size='sm' as='select'>
+                      <option>Small select</option>
+                    </Form.Control>
                   </Campo>
                   <Campo>
                     <label htmlFor='image'>Imagen</label>
@@ -329,7 +337,7 @@ const Alerta = () => {
                       `}
                       onClick={handleShow}
                     >
-                      Registrate
+                      Continuar
                     </Boton>
                   )
                 )}

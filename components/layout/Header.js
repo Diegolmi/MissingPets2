@@ -78,7 +78,7 @@ const Header = () => {
                 <Boton bgColor="true"> Login </Boton>
               </Link>
               <Link href="/crear-cuenta">
-                <Boton>Crear Cuenta</Boton>
+                <Boton>Continuar</Boton>
               </Link>
             </>
           )}
