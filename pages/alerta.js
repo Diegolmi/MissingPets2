@@ -21,7 +21,7 @@ import dynamic from 'next/dynamic';
 // validaciones
 import useValidacion from '../hooks/useValidacion';
 import validarAlerta from '../validacion/validarAlerta';
-import CrearCuenta from './crear-cuenta';
+//import CrearCuenta from './crear-cuenta';
 import CrearCuentaAlerta from './crear-cuenta-alerta';
 moment.locale('es');
 
@@ -29,6 +29,7 @@ const STATE_INICIAL = {
   nombre: '',
   raza: '',
   date: '',
+  zona:'',
   url: '',
   descripcion: '',
 };
@@ -49,7 +50,7 @@ const Alerta = () => {
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarAlerta, crearAlerta);
 
-  const { nombre, raza, date, url, descripcion } = valores;
+  const { nombre, raza, date, zona, url, descripcion } = valores;
 
   // hook de routing para redireccionar
   const router = useRouter();
@@ -86,6 +87,7 @@ const Alerta = () => {
       descripcion,
       visitas: 0,
       date,
+      zona,
       comentarios: [],
       creado: Date.now(),
       creador: {
@@ -142,7 +144,7 @@ const Alerta = () => {
             Nueva Alerta
           </h1>
           <Row>
-            <Row>
+           
               <Col>
                 <Card
                   css={css`
@@ -172,7 +174,7 @@ const Alerta = () => {
                       `}
                     >
                       <h2>{nombre}</h2>
-                      <span>Se perdio el dia {date} en la zona de ....</span>
+                      <span>Se perdio el dia {date} en la zona de {zona}</span>
                     </div>
                   </Campo>
                   <div
@@ -203,7 +205,7 @@ const Alerta = () => {
                   </div>
                 </Card>
               </Col>
-            </Row>
+            
             <Col>
               <Formulario onSubmit={handleSubmit} noValidate>
                 <fieldset>
@@ -265,8 +267,22 @@ const Alerta = () => {
                     ></input>
                   </Campo>
                   <Campo>
-                    <Form.Control size='sm' as='select'>
-                      <option>Small select</option>
+                  <label htmlFor='zona'>Zona</label>
+
+                    <Form.Control size='sm' as='select' css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                        width: 400px;
+                        height: 50px;
+                      `}   type='zona'
+                      name='zona'
+                      value={zona}
+                      onChange={handleChange}
+                      onBlur={handleBlur}>
+                      <option>Palermo</option>
+                      <option>Recoleta</option>
+                      <option>Colegiales</option>
+                      <option>Micro Centro</option>
                     </Form.Control>
                   </Campo>
                   <Campo>

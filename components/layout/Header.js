@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
-import { css, jsx, Global, ClassNames } from "@emotion/react";
-import React, { useContext } from "react";
-import Buscar from "../ui/Buscar";
-import Navegacion from "./Navegacion";
-import Link from "next/link";
-import styled from "@emotion/styled";
-import Boton from "../ui/Boton";
+import { css, jsx, Global, ClassNames } from '@emotion/react';
+import React, { useContext } from 'react';
+import Buscar from '../ui/Buscar';
+import Navegacion from './Navegacion';
+import Link from 'next/link';
+import styled from '@emotion/styled';
+import Boton from '../ui/Boton';
 import { FirebaseContext } from '../../firebase';
 
 const ContenedorHeader = styled.div`
@@ -23,7 +23,7 @@ const Logo = styled.p`
   font-size: 2rem;
   line-height: 0;
   font-weight: 700;
-  font-family: "Roboto Slab", serif;
+  font-family: 'Roboto Slab', serif;
   margin-right: 2rem;
 `;
 
@@ -43,8 +43,17 @@ const Header = () => {
             align-items: center;
           `}
         >
-          <Link href="/">
-            <Logo>Missing.<span css={css`color:#00bfbf`}>Pets</span></Logo>
+          <Link href='/'>
+            <Logo>
+              Missing.
+              <span
+                css={css`
+                  color: #00bfbf;
+                `}
+              >
+                Pets
+              </span>
+            </Logo>
           </Link>
           {/* buscador */}
           <Buscar />
@@ -66,19 +75,21 @@ const Header = () => {
               >
                 Hola: {usuario.displayName}
               </p>
-              <Boton bgColor="true" type="button"
-              onClick={() => firebase.cerrarSesion()}>
-                
+              <Boton
+                bgColor='true'
+                type='button'
+                onClick={() => firebase.cerrarSesion()}
+              >
                 Cerrar Sesion
               </Boton>
             </>
           ) : (
             <>
-              <Link href="/login">
-                <Boton bgColor="true"> Login </Boton>
+              <Link href='/login'>
+                <Boton bgColor='true'> Login </Boton>
               </Link>
-              <Link href="/crear-cuenta">
-                <Boton>Continuar</Boton>
+              <Link href='/crear-cuenta'>
+                <Boton  bgColor='true'>Crear cuenta</Boton>
               </Link>
             </>
           )}
