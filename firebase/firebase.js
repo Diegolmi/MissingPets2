@@ -12,6 +12,8 @@ class Firebase {
     this.auth = app.auth();
     this.db = app.firestore();
     this.storage = app.storage();
+    this.googleAuthProvider = new app.auth.GoogleAuthProvider;
+    this.facebookAuthProvider = new app.auth.FacebookAuthProvider;
   }
 
   //registrar usuario
@@ -39,6 +41,14 @@ class Firebase {
   async login(email, password) {
     return this.auth.signInWithEmailAndPassword(email, password);
   }
+
+  async loginGoogle() {
+    return this.auth.signInWithPopup( this.googleAuthProvider )
+  }
+  async loginFacebook() {
+    return this.auth.signInWithPopup( this.facebookAuthProvider )
+  }
+
 
   //cerrar sesion
 

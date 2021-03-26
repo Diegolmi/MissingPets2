@@ -8,7 +8,9 @@ import {
   Campo,
   InputSubmit,
   Error,
+ 
 } from "../components/ui/Formulario";
+import  Boton  from '../components/ui/Boton'
 import firebase from "../firebase/firebase";
 
 import useValidacion from "../hooks/useValidacion";
@@ -43,7 +45,22 @@ import validarIniciarSesion from "../validacion/validarIniciarSesion";
       setUserDuplicado(error.message);
     }
   }
-
+  async function authGoogle() {
+    try {
+      await firebase.loginGoogle()
+      Router.push('/');
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  async function authFacebook() {
+    try {
+      await firebase.loginFacebook()
+      Router.push('/');
+    } catch (error) {
+      console.log(error)
+    }
+  }
   return (
     <div>
       <Layout>
@@ -90,6 +107,9 @@ import validarIniciarSesion from "../validacion/validarIniciarSesion";
 
             <InputSubmit type="submit" value="Iniciar Sesion" />
           </Formulario>
+          <Boton  onClick={authGoogle}>Google</Boton>
+          <Boton onClick={authFacebook}>Facebook</Boton>
+
         </>
       </Layout>
     </div>

@@ -36,16 +36,14 @@ const CrearCuenta = () => {
   async function crearCuenta() {
     try {
       await firebase.registrar(nombre, email, password);
-     
+
       Router.push('/');
     } catch (error) {
       console.error('hubo un error al crear el usuario', error.message);
       setUserDuplicado(error.message);
-    }finally {
+    } finally {
       await firebase.enviarEmail();
-      console.log("Enviando Email...")
     }
- 
   }
 
   return (
