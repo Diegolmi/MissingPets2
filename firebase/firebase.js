@@ -1,8 +1,8 @@
-import app from "firebase/app";
-import "firebase/auth";
+import app from 'firebase/app';
+import 'firebase/auth';
 import 'firebase/firestore';
 import 'firebase/storage';
-import firebaseConfig from "./config";
+import firebaseConfig from './config';
 
 class Firebase {
   constructor() {
@@ -19,20 +19,30 @@ class Firebase {
     const nuevoUsuario = await this.auth.createUserWithEmailAndPassword(
       email,
       password
-    );
-    return await nuevoUsuario.user.updateProfile({
-      displayName: nombre
-    });
-  }
+      );
+      return await nuevoUsuario.user.updateProfile({
+        displayName: nombre,
+      }); 
+      
+    };
+ 
+    async enviarEmail(){
+      const user = this.auth.currentUser
+      user.sendEmailVerification().then(function(){
+
+      }).catch(function(error){
+
+      })
+    }
   //iniciar sesion
 
   async login(email, password) {
-      return this.auth.signInWithEmailAndPassword(email, password);
+    return this.auth.signInWithEmailAndPassword(email, password);
   }
 
-  //cerrar sesion 
+  //cerrar sesion
 
-  async cerrarSesion(){
+  async cerrarSesion() {
     await this.auth.signOut();
   }
 }

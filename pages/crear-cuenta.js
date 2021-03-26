@@ -1,28 +1,27 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import Layout from "../components/layout/Layout";
+import Layout from '../components/layout/Layout';
 import {
   Formulario,
   Campo,
   InputSubmit,
   Error,
-} from "../components/ui/Formulario";
+} from '../components/ui/Formulario';
 
-import useValidacion from "../hooks/useValidacion";
-import validarCrearCuenta from "../validacion/validarCrearCuenta";
+import useValidacion from '../hooks/useValidacion';
+import validarCrearCuenta from '../validacion/validarCrearCuenta';
 
-import firebase from "../firebase/firebase";
+import firebase from '../firebase/firebase';
 
 const STATE_INICIAL = {
-  nombre: "",
-  email: "",
-  password: "",
+  nombre: '',
+  email: '',
+  password: '',
 };
 const CrearCuenta = () => {
-
-  const [userDuplicado, setUserDuplicado] = useState(false)
+  const [userDuplicado, setUserDuplicado] = useState(false);
 
   const {
     valores,
@@ -37,11 +36,16 @@ const CrearCuenta = () => {
   async function crearCuenta() {
     try {
       await firebase.registrar(nombre, email, password);
+     
       Router.push('/');
     } catch (error) {
       console.error('hubo un error al crear el usuario', error.message);
       setUserDuplicado(error.message);
+    }finally {
+      await firebase.enviarEmail();
+      console.log("Enviando Email...")
     }
+ 
   }
 
   return (
@@ -58,12 +62,12 @@ const CrearCuenta = () => {
           </h1>
           <Formulario onSubmit={handleSubmit} noValidate>
             <Campo>
-              <label htmlFor="nombre">Nombre</label>
+              <label htmlFor='nombre'>Nombre</label>
               <input
-                type="text"
-                name="nombre"
-                id="nombre"
-                placeholder="Tu nombre"
+                type='text'
+                name='nombre'
+                id='nombre'
+                placeholder='Tu nombre'
                 value={nombre}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -71,12 +75,12 @@ const CrearCuenta = () => {
             </Campo>
             {error.nombre && <Error>{error.nombre}</Error>}
             <Campo>
-              <label htmlFor="email">Email</label>
+              <label htmlFor='email'>Email</label>
               <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Tu  email"
+                type='email'
+                name='email'
+                id='email'
+                placeholder='Tu  email'
                 value={email}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -85,12 +89,12 @@ const CrearCuenta = () => {
             {error.email && <Error>{error.email}</Error>}
 
             <Campo>
-              <label htmlFor="password">Contraseña</label>
+              <label htmlFor='password'>Contraseña</label>
               <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Tu contraseña"
+                type='password'
+                name='password'
+                id='password'
+                placeholder='Tu contraseña'
                 value={password}
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -99,8 +103,7 @@ const CrearCuenta = () => {
 
             {error.password && <Error>{error.password}</Error>}
 
-
-            <InputSubmit type="submit" value="Crear Cuenta" />
+            <InputSubmit type='submit' value='Crear Cuenta' />
           </Formulario>
         </>
       </Layout>

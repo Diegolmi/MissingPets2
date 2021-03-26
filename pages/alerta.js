@@ -5,7 +5,7 @@ import { useRouter } from 'next/router';
 import Layout from '../components/layout/Layout';
 import swal from 'sweetalert';
 import moment from 'moment';
-import { Button } from 'react-bootstrap';
+import { Container, Row, Col, Card, Form } from 'react-bootstrap';
 import Modal from 'react-bootstrap/Modal';
 import {
   Formulario,
@@ -21,7 +21,7 @@ import dynamic from 'next/dynamic';
 // validaciones
 import useValidacion from '../hooks/useValidacion';
 import validarAlerta from '../validacion/validarAlerta';
-import CrearCuenta from './crear-cuenta';
+//import CrearCuenta from './crear-cuenta';
 import CrearCuentaAlerta from './crear-cuenta-alerta';
 moment.locale('es');
 
@@ -29,6 +29,7 @@ const STATE_INICIAL = {
   nombre: '',
   raza: '',
   date: '',
+  zona:'',
   url: '',
   descripcion: '',
 };
@@ -37,6 +38,10 @@ const Alerta = () => {
   const [error, guardarError] = useState(false);
   const [image, setImage] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
+  const [fileUrl, setFileUrl] = useState(
+    'https://picsum.photos/150/150?random'
+  );
+
   const {
     valores,
     errores,
@@ -45,7 +50,7 @@ const Alerta = () => {
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarAlerta, crearAlerta);
 
-  const { nombre, raza, date, url, descripcion } = valores;
+  const { nombre, raza, date, zona, url, descripcion } = valores;
 
   // hook de routing para redireccionar
   const router = useRouter();
@@ -82,6 +87,7 @@ const Alerta = () => {
       descripcion,
       visitas: 0,
       date,
+      zona,
       comentarios: [],
       creado: Date.now(),
       creador: {
@@ -100,6 +106,12 @@ const Alerta = () => {
 
     return router.push('/');
   }
+  function processImage(event) {
+    const imageFile = event.target.files[0];
+    const imageUrl = URL.createObjectURL(imageFile);
+    setFileUrl(imageUrl);
+  }
+
   const hoy = moment();
   console.log(hoy.format('dddd Do MMMM YYYY'));
   const [show, setShow] = useState(false);
@@ -108,9 +120,14 @@ const Alerta = () => {
   const handleShow = () => setShow(true);
 
   return (
-    <div>
+    <>
       <Layout>
-        <>
+        <Container
+          css={css`
+            padding: 20px;
+          `}
+          fluid
+        >
           <h1
             css={css`
               margin-left: 450px;
@@ -119,89 +136,175 @@ const Alerta = () => {
               font-weight: 700;
               text-transform: uppercase;
               padding: 0.8rem 2rem;
-              width: 300px;
+              width: 400px;
               background-color: #00bfbf;
               color: white;
             `}
           >
             Nueva Alerta
           </h1>
-          <Formulario onSubmit={handleSubmit} noValidate>
-            <fieldset>
-              <legend
-                css={css`
-                  font-size: 25px;
-                `}
-              >
-                Información General{' '}
-              </legend>
-
-              <Campo>
-                <label htmlFor='nombre'>Nombre</label>
-                <input
-                  type='text'
-                  id='nombre'
-                  placeholder='Nombre de la mascota'
-                  name='nombre'
-                  value={nombre}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
+          <Row>
+           
+              <Col>
+                <Card
                   css={css`
-                    font-size: 15px;
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                    background-color: whitesmoke;
+                    margin-top: 100px;
+                    margin-left: 50px;
                   `}
-                />
-              </Campo>
+                >
+                  <img
+                    css={css`
+                      box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                      margin-top: 100px;
+                      width: 300px;
+                      margin-left: 40px;
+                      display: flex;
+                      justify-content: space-around;
+                    `}
+                    src={fileUrl}
+                    alt=''
+                  />
+                  <Campo>
+                    <div
+                      css={css`
+                        margin-top: -400px;
+                        margin-left: 400px;
+                        color: black;
+                      `}
+                    >
+                      <h2>{nombre}</h2>
+                      <span>Se perdio el dia {date} en la zona de {zona}</span>
+                    </div>
+                  </Campo>
+                  <div
+                    css={css`
+                      margin-left: 50px;
+                      color: black;
+                    `}
+                  >
+                    <h4 htmlFor=''>Descripcion:</h4>
+                    <span>{descripcion}</span>
+                  </div>
+                  <div
+                    css={css`
+                      margin-top: 100px;
+                    `}
+                  >
+                    <hr />
+                    <span
+                      css={css`
+                        display: flex;
+                        text-align: center;
+                        justify-content: center;
+                        padding: 15px;
+                      `}
+                    >
+                      Missing.Pets Lo viste? Contactate a hola@missing.pets
+                    </span>
+                  </div>
+                </Card>
+              </Col>
+            
+            <Col>
+              <Formulario onSubmit={handleSubmit} noValidate>
+                <fieldset>
+                  <legend
+                    css={css`
+                      font-size: 25px;
+                    `}
+                  >
+                    Información General{' '}
+                  </legend>
 
-              {error.nombre && <Error>{error.nombre}</Error>}
+                  <Campo>
+                    <label htmlFor='nombre'>Nombre</label>
+                    <input
+                      type='text'
+                      id='nombre'
+                      placeholder='Nombre de la mascota'
+                      name='nombre'
+                      value={nombre}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                      `}
+                    />
+                  </Campo>
 
-              <Campo>
-                <label htmlFor='raza'>Raza</label>
-                <input
-                  type='text'
-                  id='raza'
-                  placeholder='Raza'
-                  name='raza'
-                  value={raza}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  css={css`
-                    font-size: 15px;
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                  `}
-                />
-              </Campo>
+                  {error.nombre && <Error>{error.nombre}</Error>}
 
-              {error.raza && <Error>{error.raza}</Error>}
+                  <Campo>
+                    <label htmlFor='raza'>Raza</label>
+                    <input
+                      type='text'
+                      id='raza'
+                      placeholder='Raza'
+                      name='raza'
+                      value={raza}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                      `}
+                    />
+                  </Campo>
 
-              <Campo>
-                <label htmlFor='date'> Fecha</label>
-                {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} />  */}
-                <input
-                  type='date'
-                  name='date'
-                  value={date}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                ></input>
-              </Campo>
+                  {error.raza && <Error>{error.raza}</Error>}
 
-              <Campo>
-                <label htmlFor='image'>Imagen</label>
-                <input
-                  type='file'
-                  accept='image/*'
-                  id='image'
-                  name='image'
-                  onInput={(e) => handleFile(e)}
-                  css={css`
-                    font-size: 15px;
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                  `}
-                />
-              </Campo>
+                  <Campo>
+                    <label htmlFor='date'> Fecha</label>
+                    {/* <DatePicker selected={startDate} onChange={date => setStartDate(date)} />  */}
+                    <input
+                      type='date'
+                      name='date'
+                      value={date}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                    ></input>
+                  </Campo>
+                  <Campo>
+                  <label htmlFor='zona'>Zona</label>
 
-              {/* <Campo>
+                    <Form.Control size='sm' as='select' css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                        width: 400px;
+                        height: 50px;
+                      `}   type='zona'
+                      name='zona'
+                      value={zona}
+                      onChange={handleChange}
+                      onBlur={handleBlur}>
+                      <option>Palermo</option>
+                      <option>Recoleta</option>
+                      <option>Colegiales</option>
+                      <option>Micro Centro</option>
+                    </Form.Control>
+                  </Campo>
+                  <Campo>
+                    <label htmlFor='image'>Imagen</label>
+                    <input
+                      type='file'
+                      accept='image/*'
+                      id='image'
+                      name='image'
+                      onInput={(e) => handleFile(e)}
+                      onChange={processImage}
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                        margin-top: 20px;
+                        width: 100px;
+                        margin-left: 20px;
+                      `}
+                    />
+                  </Campo>
+
+                  {/* <Campo>
                 <label htmlFor="url">URL</label>
                 <input
                   type="url"
@@ -214,56 +317,61 @@ const Alerta = () => {
                 />
               </Campo> */}
 
-              {/* {error.url && <Error>{error.url}</Error>} */}
-              <Campo>{/* <MapView /> */}</Campo>
-              <Campo>
-                <label htmlFor='descripcion'>Descripcion</label>
-                <textarea
-                  id='descripcion'
-                  name='descripcion'
-                  value={descripcion}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  css={css`
-                    font-size: 15px;
-                    box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
-                  `}
-                />
-              </Campo>
-              {error.descripcion && <Error>{error.descripcion}</Error>}
-            </fieldset>
+                  {/* {error.url && <Error>{error.url}</Error>} */}
+                  <Campo>{/* <MapView /> */}</Campo>
+                  <Campo>
+                    <label htmlFor='descripcion'>Descripcion</label>
+                    <textarea
+                      id='descripcion'
+                      name='descripcion'
+                      value={descripcion}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      css={css`
+                        font-size: 15px;
+                        box-shadow: 10px 10px 4px -8px rgba(0, 0, 0, 0.75);
+                      `}
+                    />
+                  </Campo>
+                  {error.descripcion && <Error>{error.descripcion}</Error>}
+                </fieldset>
 
-            {error && <Error>{error} </Error>}
+                {error && <Error>{error} </Error>}
 
-            {usuario ? (
-              <InputSubmit type='submit' value='Crear alerta' />
-            ) : (
-              !usuario && (
-                <Boton variant='primary'  css={css`
-                margin-top: 5rem;
-                text-align: center;
-                background-color: red;
-                color: white;
-                margin-left: 250px;
-                
-              `}  onClick={handleShow}>
-                  Registrate
-                </Boton>
-              )
-            )}
-          </Formulario>
-        </>
+                {usuario ? (
+                  <InputSubmit type='submit' value='Crear alerta' />
+                ) : (
+                  !usuario && (
+                    <Boton
+                      variant='primary'
+                      css={css`
+                        margin-top: 5rem;
+                        text-align: center;
+                        background-color: red;
+                        color: white;
+                        margin-left: 250px;
+                      `}
+                      onClick={handleShow}
+                    >
+                      Continuar
+                    </Boton>
+                  )
+                )}
+              </Formulario>
+            </Col>
+          </Row>
+        </Container>
       </Layout>
+
       <Modal show={show} onHide={handleClose} animation={false}>
         <Modal.Header closeButton>
           <Modal.Title>Registrate</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <CrearCuentaAlerta />
-       
-       </Modal.Body>
+        </Modal.Body>
       </Modal>
-    </div>
+    </>
   );
 };
 

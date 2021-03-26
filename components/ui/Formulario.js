@@ -25,9 +25,10 @@ export const Campo = styled.div`
     input, textarea {
         flex: 1;
         padding: 1rem;
+        font-size: 15px;
     }
     textarea {
-        height: 400px
+        height: 100px
     }
 `
 
