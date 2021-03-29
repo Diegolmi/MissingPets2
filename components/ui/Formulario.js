@@ -2,8 +2,8 @@ import styled from '@emotion/styled';
 
 export const Formulario = styled.form`
     max-width: 600px;
-    width: 95%auto;
-    margin: 5rem auto 0 auto;
+    width: 80%;
+    margin: 5rem auto 1rem auto;
 
     fieldset {
         margin: 1rem;
@@ -18,7 +18,7 @@ export const Campo = styled.div`
     align-items: center;
 
     label {
-        flex: 0 0 150px;
+        flex: 0 0 100px;
         font-size: 1rem;
     }
 
@@ -48,6 +48,7 @@ font-weight: 700;
     cursor: pointer;
 }
 `
+
 export const Error = styled.p`
      background-color: red;
      padding: .3rem;

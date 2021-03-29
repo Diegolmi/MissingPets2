@@ -1,29 +1,29 @@
 /** @jsxImportSource @emotion/react */
-import { css } from "@emotion/react";
+import { css } from '@emotion/react';
 import Router from 'next/router';
 import React, { useState } from 'react';
-import Layout from "../components/layout/Layout";
+import Layout from '../components/layout/Layout';
 import {
   Formulario,
   Campo,
   InputSubmit,
   Error,
- 
-} from "../components/ui/Formulario";
-import  Boton  from '../components/ui/Boton'
-import firebase from "../firebase/firebase";
+} from '../components/ui/Formulario';
+import firebase from '../firebase/firebase';
 
-import useValidacion from "../hooks/useValidacion";
-import validarIniciarSesion from "../validacion/validarIniciarSesion";
+import useValidacion from '../hooks/useValidacion';
+import validarIniciarSesion from '../validacion/validarIniciarSesion';
+import { Card } from 'react-bootstrap';
+import ButtonGoogle from '../components/ui/BotonGoogle';
+import ButtonFacebook from '../components/ui/BotonFacebook';
+import Link from 'next/link';
 
-
- const Login = () => {
-
-  const [userDuplicado, setUserDuplicado] = useState(false)
+const Login = () => {
+  const [userDuplicado, setUserDuplicado] = useState(false);
 
   const STATE_INICIAL = {
-    email: "",
-    password: "",
+    email: '',
+    password: '',
   };
   const {
     valores,
@@ -33,12 +33,12 @@ import validarIniciarSesion from "../validacion/validarIniciarSesion";
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarIniciarSesion, iniciarSesion);
 
-  const {  email, password } = valores;
+  const { email, password } = valores;
 
   async function iniciarSesion() {
     try {
-     await firebase.login(email, password);
-    
+      await firebase.login(email, password);
+
       Router.push('/');
     } catch (error) {
       console.error('hubo un error al autenticar el usuario', error);
@@ -47,72 +47,98 @@ import validarIniciarSesion from "../validacion/validarIniciarSesion";
   }
   async function authGoogle() {
     try {
-      await firebase.loginGoogle()
+      await firebase.loginGoogle();
       Router.push('/');
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   async function authFacebook() {
     try {
-      await firebase.loginFacebook()
+      await firebase.loginFacebook();
       Router.push('/');
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
   return (
-    <div>
+    <>
       <Layout>
-        <>
-          <h1
+        <div
+          css={css`
+            display: flex;
+            justify-content: center;
+          `}
+        >
+          <Card
             css={css`
-              margin-top: 5rem;
-              text-align: center;
+              box-shadow: 10px 10px 49px -23px rgba(0,0,0,0.75);
+              width: 30%;
+              height: 800px;
             `}
           >
-            Iniciar Sesíon
-          </h1>
-          <Formulario onSubmit={handleSubmit} noValidate>
-          
-            <Campo>
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                placeholder="Tu  email"
-                value={email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Campo>
-            {error.email && <Error>{error.email}</Error>}
+            <h1
+              css={css`
+                margin-top: 5rem;
+                text-align: center;
+              `}
+            >
+              Iniciar Sesión
+            </h1>
+            <Formulario onSubmit={handleSubmit} noValidate>
+              <Campo>
+                <label htmlFor='email'>Email</label>
+                <input
+                  type='email'
+                  name='email'
+                  id='email'
+                  placeholder='Tu  email'
+                  value={email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Campo>
+              {error.email && <Error>{error.email}</Error>}
 
-            <Campo>
-              <label htmlFor="password">Contraseña</label>
-              <input
-                type="password"
-                name="password"
-                id="password"
-                placeholder="Tu contraseña"
-                value={password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Campo>
+              <Campo>
+                <label htmlFor='password'>Contraseña</label>
+                <input
+                  type='password'
+                  name='password'
+                  id='password'
+                  placeholder='Tu contraseña'
+                  value={password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Campo>
 
-            {error.password && <Error>{error.password}</Error>}
+              {error.password && <Error>{error.password}</Error>}
 
-
-            <InputSubmit type="submit" value="Iniciar Sesion" />
-          </Formulario>
-          <Boton  onClick={authGoogle}>Google</Boton>
-          <Boton onClick={authFacebook}>Facebook</Boton>
-
-        </>
+              <InputSubmit type='submit' value='Iniciar Sesion' />
+            </Formulario>
+            
+            <div
+              css={css`
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+              `}
+            >
+              <span css={css`
+                margin:10px;
+              `} > O BIEN </span>
+              <ButtonGoogle onClick={authGoogle}>Google</ButtonGoogle>
+              <ButtonFacebook onClick={authFacebook}>Facebook</ButtonFacebook>
+              
+            </div>
+            <hr/>
+            <Link href='/recupero'>¿No recordas la contraseña?</Link>
+          </Card>
+        </div>
       </Layout>
-    </div>
+    </>
   );
 };
-export default Login
+export default Login;

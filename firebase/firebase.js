@@ -31,9 +31,9 @@ class Firebase {
     async enviarEmail(){
       const user = this.auth.currentUser
       user.sendEmailVerification().then(function(){
-
+          alert('Se envio un email para verificar su cuenta')
       }).catch(function(error){
-
+        console.log('hay un error', error)
       })
     }
   //iniciar sesion
@@ -47,6 +47,12 @@ class Firebase {
   }
   async loginFacebook() {
     return this.auth.signInWithPopup( this.facebookAuthProvider )
+  }
+
+  async forgot(email){
+   await this.auth.sendPasswordResetEmail(email)
+    
+   
   }
 
 
