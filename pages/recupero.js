@@ -15,7 +15,7 @@ import { Card } from 'react-bootstrap';
 
 const Recupero = () => {
   
-  const {email} = valor 
+  // const {email} = valor 
   
   async function resetPass(emailAddress) {
     
@@ -55,7 +55,7 @@ const Recupero = () => {
                   id='email'
                   placeholder='Tu  email'
                 
-                  value={email}
+                  // value={email}
                 />
               </Campo>
               {/* {error.email && <Error>{error.email}</Error>} */}
