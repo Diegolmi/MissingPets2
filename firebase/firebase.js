@@ -49,9 +49,14 @@ class Firebase {
     return this.auth.signInWithPopup( this.facebookAuthProvider )
   }
 
-  async forgot(email){
-   await this.auth.sendPasswordResetEmail(email)
+  async forgot(emailAddress){
+   
     
+    this.auth.sendPasswordResetEmail(emailAddress).then(function() {
+      alert('email enviado')
+    }).catch(function(error) {
+      // An error happened.
+    });    
    
   }
 

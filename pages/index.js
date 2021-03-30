@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from "react";
 import Layout from "../components/layout/Layout";
-import { FirebaseContext } from "../firebase";
+import {FirebaseContext, firebase}  from "../firebase/index";
 import DetallesMascotas from "../components/layout/DetallesMascotas";
 import firebaseConfig from "../firebase/config";
 import dynamic from "next/dynamic";
@@ -9,13 +9,15 @@ import dynamic from "next/dynamic";
 const Home = () => {
   const [mascotas, setMascotas] = useState([]);
 
-  const { firebase } = useContext(FirebaseContext);
+  // const { firebase } = useContext(FirebaseContext);
+  console.log(firebase)
   const MapWithNoSSR = dynamic(() => import('../components/Map'), {
     ssr: false
   });
 
   useEffect(() => {
     const obtenerMascotas = () => {
+      console.log(firebase)
       firebase.db
         .collection("alertas")
         .orderBy("creado", "desc")

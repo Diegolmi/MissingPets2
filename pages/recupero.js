@@ -14,22 +14,13 @@ import firebase from '../firebase/firebase';
 import { Card } from 'react-bootstrap';
 
 const Recupero = () => {
+  
+  const {email} = valor 
+  
+  async function resetPass(emailAddress) {
     
-
-      async function resetPass() {
-        
-        console.log('pasando')
-        // try {
-        //   await firebase.forgot(email);
-         
-        // } catch (error) {
-        //   console.error();
-         
-        // }
-      }
-
-
-   
+    await firebase.forgot(emailAddress);
+  }
 
   return (
     <>
@@ -42,7 +33,7 @@ const Recupero = () => {
         >
           <Card
             css={css`
-              box-shadow: 10px 10px 49px -23px rgba(0,0,0,0.75);
+              box-shadow: 10px 10px 49px -23px rgba(0, 0, 0, 0.75);
               width: 30%;
               height: 800px;
             `}
@@ -63,18 +54,14 @@ const Recupero = () => {
                   name='email'
                   id='email'
                   placeholder='Tu  email'
-                //   value={email}
                 
+                  value={email}
                 />
               </Campo>
               {/* {error.email && <Error>{error.email}</Error>} */}
 
-              
-
               <InputSubmit type='submit' value='Enviar Email' />
             </Formulario>
-            
-           
           </Card>
         </div>
       </Layout>
