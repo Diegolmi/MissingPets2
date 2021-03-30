@@ -15,7 +15,7 @@ import {
 } from '../components/ui/Formulario';
 import Link from 'next/link';
 import Boton from '../components/ui/Boton';
-import { FirebaseContext } from '../firebase/index';
+import { FirebaseContext, firebase } from '../firebase/index';
 import dynamic from 'next/dynamic';
 
 // validaciones
@@ -56,7 +56,7 @@ const Alerta = () => {
   const router = useRouter();
 
   // context con las operaciones crud de firebase
-  const { usuario, firebase } = useContext(FirebaseContext);
+  const { usuario } = useContext(FirebaseContext);
 
   const handleFile = (e) => {
     if (e.target.files[0]) {
