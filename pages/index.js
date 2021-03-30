@@ -10,14 +10,14 @@ const Home = () => {
   const [mascotas, setMascotas] = useState([]);
 
   // const { firebase } = useContext(FirebaseContext);
-  console.log(firebase)
+  // console.log(firebase)
   const MapWithNoSSR = dynamic(() => import('../components/Map'), {
     ssr: false
   });
 
   useEffect(() => {
     const obtenerMascotas = () => {
-      console.log(firebase)
+      // console.log(firebase)
       firebase.db
         .collection("alertas")
         .orderBy("creado", "desc")

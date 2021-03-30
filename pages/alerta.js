@@ -113,7 +113,7 @@ const Alerta = () => {
   }
 
   const hoy = moment();
-  console.log(hoy.format('dddd Do MMMM YYYY'));
+  // console.log(hoy.format('dddd Do MMMM YYYY'));
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

@@ -33,7 +33,7 @@ class Firebase {
       user.sendEmailVerification().then(function(){
           alert('Se envio un email para verificar su cuenta')
       }).catch(function(error){
-        console.log('hay un error', error)
+        // console.log('hay un error', error)
       })
     }
   //iniciar sesion

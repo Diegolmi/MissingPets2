@@ -50,7 +50,7 @@ const Login = () => {
       await firebase.loginGoogle();
       Router.push('/');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
   async function authFacebook() {
@@ -58,7 +58,7 @@ const Login = () => {
       await firebase.loginFacebook();
       Router.push('/');
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
   return (
