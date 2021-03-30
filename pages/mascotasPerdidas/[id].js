@@ -1,7 +1,7 @@
 // @ts-nocheck
 import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { FirebaseContext } from "../../firebase";
+import { FirebaseContext } from "../../firebase/index";
 import formatDistanceToNow from "date-fns/formatDistanceToNow";
 import { es } from "date-fns/locale";
 import Layout from "../../components/layout/Layout";

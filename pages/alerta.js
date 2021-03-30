@@ -15,7 +15,7 @@ import {
 } from '../components/ui/Formulario';
 import Link from 'next/link';
 import Boton from '../components/ui/Boton';
-import { FirebaseContext } from '../firebase';
+import { FirebaseContext } from '../firebase/index';
 import dynamic from 'next/dynamic';
 
 // validaciones
