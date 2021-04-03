@@ -4,6 +4,7 @@ import {FirebaseContext, firebase}  from "../firebase/index";
 import DetallesMascotas from "../components/layout/DetallesMascotas";
 import firebaseConfig from "../firebase/config";
 import dynamic from "next/dynamic";
+import { Row, Col } from "react-bootstrap";
 
 
 const Home = () => {
@@ -40,22 +41,7 @@ const Home = () => {
     id
   } = mascotas
 
-  // const agregarVisitas = (e) => {
-    
-  //   //agregar comentario
-  //   const nuevaVisita = [...visitas, visita];
-
-  //   firebase.db.collection("alertas").doc(id).update({
-  //     visitas: nuevaVisita,
-  //   });
-
-  //   setMascotas({
-  //     ...mascotas,
-  //     visitas: nuevaVisita,
-  //   });
-    
-  // };
-  const numeroVisitas = (visita, id) => {
+   const numeroVisitas = (visita, id) => {
     if(!id){
       return false
     }
@@ -66,15 +52,20 @@ const Home = () => {
     });
     
   }
-
+  // style={{display:"grid", gridTemplateColumns:"repeat( auto-fill, minmax(350px,1fr))", gap: 20}}
   return (
-    <div>
+    <div >
       <Layout>
         <div className="listado-mascotas">
           <div className="contenedor">
-            <ul className="bg-white">
+            <ul style={{display:"grid", gridTemplateColumns:"repeat( auto-fill, minmax(350px,1fr))", gap: 20}}>
               {mascotas.map((mascota) => (
-                <DetallesMascotas key={mascota.id} mascota={mascota} numeroVisitas={numeroVisitas} />
+                <Row>
+                  <Col>
+                  <DetallesMascotas key={mascota.id} mascota={mascota} numeroVisitas={numeroVisitas} />
+                  </Col>
+                  
+                </Row>
               ))}
             </ul>
           </div>
