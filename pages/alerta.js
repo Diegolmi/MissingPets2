@@ -183,7 +183,7 @@ const Alerta = () => {
                       color: black;
                     `}
                   >
-                    <h4 htmlFor=''>Descripcion:</h4>
+                    <h4 htmlFor=''>Descripcion</h4>
                     <span>{descripcion}</span>
                   </div>
                   <div
