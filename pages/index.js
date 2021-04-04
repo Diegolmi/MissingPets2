@@ -70,9 +70,9 @@ const Home = () => {
             </ul>
           </div>
         </div>
-        <div id="map">
+        {/* <div id="map">
          <MapWithNoSSR />
-      </div>
+      </div> */}
       </Layout>
     </div>
   );
