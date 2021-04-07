@@ -14,6 +14,9 @@ import useValidacion from '../hooks/useValidacion';
 import validarCrearCuenta from '../validacion/validarCrearCuenta';
 
 import firebase from '../firebase/firebase';
+import { Card } from 'react-bootstrap';
+import ButtonGoogle from '../components/ui/BotonGoogle';
+import ButtonFacebook from '../components/ui/BotonFacebook';
 
 const STATE_INICIAL = {
   nombre: '',
@@ -45,67 +48,99 @@ const CrearCuenta = () => {
       await firebase.enviarEmail();
     }
   }
+  async function authGoogle() {
+    try {
+      await firebase.loginGoogle();
+      Router.push('/');
+    } catch (error) {
+      // console.log(error);
+    }
+  }
+  async function authFacebook() {
+    try {
+      await firebase.loginFacebook();
+      Router.push('/');
+    } catch (error) {
+      // console.log(error);
+    }
+  }
 
   return (
-    <div>
+    <>
       <Layout>
-        <>
-          <h1
-            css={css`
-              margin-top: 5rem;
-              text-align: center;
-            `}
-          >
-            Crear Cuenta
-          </h1>
-          <Formulario onSubmit={handleSubmit} noValidate>
-            <Campo>
-              <label htmlFor='nombre'>Nombre</label>
-              <input
-                type='text'
-                name='nombre'
-                id='nombre'
-                placeholder='Tu nombre'
-                value={nombre}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Campo>
-            {error.nombre && <Error>{error.nombre}</Error>}
-            <Campo>
-              <label htmlFor='email'>Email</label>
-              <input
-                type='email'
-                name='email'
-                id='email'
-                placeholder='Tu  email'
-                value={email}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Campo>
-            {error.email && <Error>{error.email}</Error>}
+        <div className='contenedorCard'>
+          <Card className='cardLogin'>
+            <h1
+              css={css`
+                margin-top: 5rem;
+                text-align: center;
+              `}
+            >
+              Crear Cuenta
+            </h1>
+            <Formulario onSubmit={handleSubmit} noValidate>
+              <Campo>
+                <label htmlFor='nombre'>Nombre</label>
+                <input
+                  type='text'
+                  name='nombre'
+                  id='nombre'
+                  placeholder='Tu nombre'
+                  value={nombre}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Campo>
+              {error.nombre && <Error>{error.nombre}</Error>}
+              <Campo>
+                <label htmlFor='email'>Email</label>
+                <input
+                  type='email'
+                  name='email'
+                  id='email'
+                  placeholder='Tu  email'
+                  value={email}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Campo>
+              {error.email && <Error>{error.email}</Error>}
 
-            <Campo>
-              <label htmlFor='password'>Contraseña</label>
-              <input
-                type='password'
-                name='password'
-                id='password'
-                placeholder='Tu contraseña'
-                value={password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Campo>
+              <Campo>
+                <label htmlFor='password'>Contraseña</label>
+                <input
+                  type='password'
+                  name='password'
+                  id='password'
+                  placeholder='Tu contraseña'
+                  value={password}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                />
+              </Campo>
 
-            {error.password && <Error>{error.password}</Error>}
+              {error.password && <Error>{error.password}</Error>}
 
-            <InputSubmit type='submit' value='Crear Cuenta' />
-          </Formulario>
-        </>
+              <InputSubmit type='submit' value='Crear Cuenta' />
+            </Formulario>
+            <div
+                className="contenedorLoginRedes"
+              >
+                <span
+                  css={css`
+                    margin: 10px;
+                  `}
+                >
+                  {' '}
+                  O BIEN{' '}
+                </span>
+                <ButtonGoogle onClick={authGoogle}>Google</ButtonGoogle>
+                <ButtonFacebook onClick={authFacebook}>Facebook</ButtonFacebook>
+              </div>
+          </Card>
+        </div>
       </Layout>
-    </div>
+    </>
   );
 };
 export default CrearCuenta;
