@@ -1,18 +1,100 @@
-.listado-mascotas {
-    background-color: #f3f3f3
-}
+/* .listado-mascotas {
+    background-color: #af3f3f  !important;
+    width: 95% !important;
+
+} */
 .contenedor {
-    max-width: 1200pz;
-    width: 95%;
-    padding: 5rem 0;
-    margin: 0 auto;
+  background-color: whitesmoke !important;
+  /* max-width: 1200px; */
+  width: 95% !important ;
+  padding: 5rem 0;
+  margin: 0 auto;
+}
+.contenedor ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  /* gap: 20; */
 }
 
 .bg-white {
-    background-color: #FFF;
-
+  background-color: #fff;
 }
 .mapa {
-    height: 700px;
+  height: 700px;
+}
+/* style Login */
 
+.contenedorCard {
+  display: flex;
+  justify-content: center;
+}
+.cardLogin {
+  box-shadow: 10px 10px 49px -23px rgba(0, 0, 0, 0.75);
+  width: 40%;
+  height: 800px;
+  margin-top: 50px;
+}
+.contenedorLoginRedes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+@media (max-width: 576px) {
+  /* .listado-mascotas {
+        background-color: rgb(33, 218, 42)  !important;
+        width:780px !important;
+    
+    } */
+  .contenedor {
+    background-color: whitesmoke !important;
+
+    width: 800px !important ;
+    padding: 10px !important;
+    margin-left: -10px !important;
+  }
+  .contenedor ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    /* gap: 20; */
+  }
+  
+
+  /* style Login */
+  .contenedorCard {
+    display: block;
+  }
+  .cardLogin {
+    box-shadow: 10px 10px 49px -23px rgba(0, 0, 0, 0.75);
+    width: 700px !important;
+    height: 800px;
+    margin-left: 50px;
+  }
+  .contenedorLoginRedes {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+}
+@media (min-width: 768px) and (max-width: 1300px) {
+  .contenedor {
+    background-color: whitesmoke !important;
+
+    width: 1200px !important ;
+    /* padding: 20px !important;  */
+    margin-left: -5px !important;
+    margin: 10px !important;
+  }
+  .detallesMascotas {
+    padding: 20px !important;
+  }
+  .contenedor ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+
+    margin: 20px !important;
+    gap: 20;
+  }
 }

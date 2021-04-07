@@ -14,6 +14,7 @@ const Mascotas = styled.li`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid #e1e1e1;
+
 `;
 const DescripcionMascotas = styled.div`
   flex: 0 1 300px; 
@@ -21,6 +22,7 @@ const DescripcionMascotas = styled.div`
   /* grid-template-columns: 1fr 3fr; */
   column-gap: 3rem;
   height: 450px;
+ 
 `;
 const Titulo = styled.a`
   font-weight: bold;

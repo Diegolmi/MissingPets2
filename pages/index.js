@@ -4,7 +4,7 @@ import {FirebaseContext, firebase}  from "../firebase/index";
 import DetallesMascotas from "../components/layout/DetallesMascotas";
 import firebaseConfig from "../firebase/config";
 import dynamic from "next/dynamic";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container, Card } from "react-bootstrap";
 
 
 const Home = () => {
@@ -54,27 +54,27 @@ const Home = () => {
   }
   // style={{display:"grid", gridTemplateColumns:"repeat( auto-fill, minmax(350px,1fr))", gap: 20}}
   return (
-    <div >
+    <>
       <Layout>
-        <div className="listado-mascotas">
+        <Container fluid className="listado-mascotas"> 
           <div className="contenedor">
-            <ul style={{display:"grid", gridTemplateColumns:"repeat( auto-fill, minmax(350px,1fr))", gap: 20}}>
+            <ul>
               {mascotas.map((mascota) => (
                 <Row>
-                  <Col>
-                  <DetallesMascotas key={mascota.id} mascota={mascota} numeroVisitas={numeroVisitas} />
+                  <Col className="detallesMascotas">
+                  <DetallesMascotas  key={mascota.id} mascota={mascota} numeroVisitas={numeroVisitas} />
                   </Col>
                   
                 </Row>
               ))}
             </ul>
           </div>
-        </div>
+         </Container>
         {/* <div id="map">
          <MapWithNoSSR />
       </div> */}
       </Layout>
-    </div>
+    </>
   );
 };
 export default Home;
